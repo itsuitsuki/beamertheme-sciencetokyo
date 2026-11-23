@@ -1,0 +1,116 @@
+%% Science Tokyo Beamer theme.
+%% Derived from the Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (https://github.com/oyamay/beamertheme-titech).
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%%     https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemesciencetokyo}[2026/11/23 v2.0 Science Tokyo Beamer theme]
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /sciencetokyo/color/block/.cd,
+    .is choice,
+    transparent/.code=\scitokyo@block@transparent,
+    fill/.code=\scitokyo@block@fill,
+}
+\newcommand{\scitokyo@color@setdefaults}{
+  \pgfkeys{/sciencetokyo/color/.cd,
+    block=transparent,
+  }
+}
+% The color scheme of the official PowerPoint templates.
+\definecolor{STnavy}      {HTML}{1C3077}
+\definecolor{STlightblue} {HTML}{7F96C2}
+\definecolor{STred}       {HTML}{E97979}
+\definecolor{STorange}    {HTML}{F8B388}
+\definecolor{STyellow}    {HTML}{EDC669}
+\definecolor{STgreen}     {HTML}{81BD5F}
+\definecolor{STdarkgreen} {HTML}{59A36C}
+\definecolor{STgray}      {HTML}{999999}
+\setbeamercolor{normal text}{%
+  fg=black,
+  bg=white
+}
+% The accent colors are too light for text on white, so text uses darker shades of them.
+\setbeamercolor{alerted text}{%
+  fg=STred!75!black
+}
+\setbeamercolor{example text}{%
+  fg=STdarkgreen!75!black
+}
+\setbeamercolor{structure}{fg=STnavy}
+\setbeamercolor{titlelike}{fg=STnavy}
+\setbeamercolor{title}{fg=STnavy}
+\setbeamercolor{subtitle}{fg=STnavy}
+\setbeamercolor{author}{fg=STnavy}
+\setbeamercolor{institute}{fg=STnavy}
+\setbeamercolor{date}{fg=STnavy}
+\setbeamercolor{frametitle}{fg=STnavy}
+\setbeamercolor{section title}{fg=STnavy}
+\setbeamercolor{subsection title}{fg=STnavy}
+\setbeamercolor{logo}{fg=STnavy}
+\setbeamercolor{section in toc}{fg=normal text.fg}
+\setbeamercolor{page number in head/foot}{fg=STnavy}
+\setbeamercolor{palette primary}{%
+  fg=white,
+  bg=STnavy
+}
+\setbeamercolor{progress bar}{%
+  fg=STnavy,
+  bg=STlightblue!40
+}
+\setbeamercolor{progress bar in head/foot}{%
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in section page}{
+  use=progress bar,
+  parent=progress bar
+}
+\newcommand{\scitokyo@block@transparent}{
+  \setbeamercolor{block title}{%
+    fg=STnavy,
+    bg=
+  }
+  \setbeamercolor{block body}{
+    bg=
+  }
+}
+\newcommand{\scitokyo@block@fill}{
+  \setbeamercolor{block title}{%
+    fg=STnavy,
+    bg=STlightblue!30
+  }
+  \setbeamercolor{block body}{
+    bg=STlightblue!10
+  }
+}
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
+\scitokyo@color@setdefaults
+\ProcessPgfPackageOptions{/sciencetokyo/color}
+\mode<all>
+\endinput
+%%
+%% End of file `beamercolorthemesciencetokyo.sty'.

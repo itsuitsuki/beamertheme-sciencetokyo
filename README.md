@@ -1,28 +1,68 @@
-# Tokyo Tech-flavored Metropolis Theme
+# Science Tokyo Beamer Theme
 <p align="center">
-<img src="https://github.com/oyamay/beamertheme-titech/raw/master/misc/preview_1.png">
-<img src="https://github.com/oyamay/beamertheme-titech/raw/master/misc/preview_2.png">
+<img src="misc/preview_titles.png">
+<img src="misc/preview_frames.png">
 </p>
 
-The cover photo and the Tokyo Tech seals belong to Tokyo Institute of Technology.
+A Beamer theme that follows the official PowerPoint templates A to D of Institute of Science Tokyo.
+It is derived from the [Tokyo Tech-flavored Metropolis theme](https://github.com/oyamay/beamertheme-titech) by Yosuke Oyama, which is based on [Metropolis](https://github.com/matze/mtheme).
 
-**Tokyo Tech-flavored Metropolis Theme** is a Beamer theme that imitates [Tokyo Tech's PowerPoint template](https://www.titech.ac.jp/staff/rules/logo/file/ppt_en.pptx).
-This theme is based on [Metropolis](https://github.com/matze/mtheme) theme.
+The logos and the background images belong to Institute of Science Tokyo. This repository does not include them.
 
-# How to Use This Theme
-Place this directory to appropriate custom package directory and put `\usetheme{titech}` to your Beamer slides.
-The `noimg` option prevents the theme from using official iamges, which are **not** included in this repository (see the following section for details).
-
-# How to Embed The Tokyo Tech's Logo and The Cover Photo
-This theme does not contain the Tokyo Tech's logo and the cover photo due to a copyright problem.
-You can optionally extract the images from the official PowerPoint template and embed them to your Beamer slides by executing
+# Add the Official Images
+Download the official Science Tokyo PowerPoint templates A to D and run
 
 ```
 cd /path/to/this/repository
-wget https://www.titech.ac.jp/staff/rules/logo/file/ppt_en.pptx
-./extract_ppt_images.sh
+./extract_pptx_images.sh /path/to/templates/*.pptx
 ```
 
+The script reads the variant from each template, so the file names do not matter, and copies the logos and the backgrounds into `img/`.
+Without them, the theme draws the bands with TikZ and sets the logo as text.
+The `noimg` option uses this fallback even when the images are present.
+
+# Use the Theme
+Put this directory on the TeX search path together with its subdirectories, for example with `TEXINPUTS=.:/path/to/this/repository//:` or by copying it into `$(kpsewhich -var-value TEXMFHOME)/tex/latex/`.
+On Overleaf, upload the `.sty` files and the `img/` folder to the top level of the project, and set the compiler to LuaLaTeX for Japanese text.
+Then load the theme:
+
+```latex
+\documentclass[aspectratio=169]{beamer}
+\usepackage[haranoaji,deluxe]{luatexja-preset} % Japanese with LuaLaTeX
+\usetheme[variant=A]{sciencetokyo}
+
+\title{Presentation Title}
+\author{Name}
+\institute{Position and Affiliation}
+\date{Event Name, Date}
+```
+
+`\date` fills the slot for the event name and the date on the title page.
+Call `\maketitle` outside a frame, so that the title page gets no frame number and no progress bar.
+
+The theme works with LuaLaTeX, XeLaTeX, pdfLaTeX, and pLaTeX.
+With LuaLaTeX and XeLaTeX, Latin text uses Fira Sans, or Noto Sans when Fira Sans is missing.
+Japanese text uses the Gothic family.
+
+`example/` contains a sample deck. Run `make` in that directory to build it with latexmk and LuaLaTeX.
+
+# Options
+
+| Option | Values | Effect |
+|---|---|---|
+| `variant` | `A` (default), `B`, `C`, `D` | Design of the title page and the section pages |
+| `sectionpage` | `strong` (default), `pale`, `none` | Background of the page that opens each section |
+| `subsectionpage` | `strong`, `pale`, `none` (default) | Background of the page that opens each subsection |
+| `logo` | `wide` (default), `stacked` | Logo at the top right of ordinary frames |
+| `numbering` | `counter` (default), `fraction`, `none` | Frame number |
+| `progressbar` | `none` (default), `head`, `frametitle`, `foot` | Position of the progress bar |
+| `block` | `transparent` (default), `fill` | Background of blocks |
+| `noimg` | | Draws the fallback instead of the official images |
+
+To change an option in the middle of a document, use `\sciencetokyoset`, for example `\sciencetokyoset{sectionpage=pale}`.
+A frame with the `standout` option has a navy background and centered text.
+
+The colors of the official templates are available as `STnavy`, `STlightblue`, `STred`, `STorange`, `STyellow`, `STgreen`, `STdarkgreen`, and `STgray`.
 
 ---
 

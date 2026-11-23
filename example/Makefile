@@ -1,18 +1,11 @@
 MAIN = main
 BUILD = build
-ROOT = `git rev-parse --show-toplevel`
+ROOT := $(shell git rev-parse --show-toplevel)
 
-all: $(MAIN).pdf
+.PHONY: all clean
 
-$(MAIN).pdf: $(MAIN).tex
-	mkdir -p $(BUILD)
-
-	TEXINPUTS="${TEXINPUTS};.;$(ROOT)//;" platex \
-	-interaction nonstopmode \
-	-halt-on-error \
-	-file-line-error \
-	-output-directory=$(BUILD) $(MAIN).tex
-	TEXINPUTS="${TEXINPUTS};.;$(ROOT)//;" dvipdfmx -o $(BUILD)/$(MAIN).pdf $(BUILD)/$(MAIN).dvi
+all:
+	TEXINPUTS=".:$(ROOT)//:" latexmk -lualatex -interaction=nonstopmode -halt-on-error -file-line-error -outdir=$(BUILD) $(MAIN).tex
 
 clean:
-	rm -r $(BUILD)
+	rm -rf $(BUILD)

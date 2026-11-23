@@ -1,18 +1,22 @@
-\documentclass[dvipdfmx,unicode,10pt,aspectratio=43]{beamer}
-\usetheme{titech}
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\usetheme[variant=A]{sciencetokyo}
 
-\title{Presentation Title}
-\author{Taro Toko}
-\institute{Tokyo Institute of Technology}
-\date{May 26, 1929}
+\title{Presentation Title\\プレゼンテーションのタイトル}
+\subtitle{Subtitle}
+\author{Taro Kagaku}
+\institute{Department of Computer Science, Institute of Science Tokyo}
+\date{Event Name, November 23, 2026}
 
 \begin{document}
 
-\begin{frame}
-  \maketitle
+\maketitle
+
+\begin{frame}{Outline}
+  \tableofcontents
 \end{frame}
 
-\section{Section I.}
+\section{Section I}
 
 \begin{frame}{First Slide}
   \begin{itemize}
@@ -23,24 +27,25 @@
       \item Tamachi
       \end{itemize}
     \end{itemize}
+  \item Yushima
   \end{itemize}
 
   \begin{alertblock}{This is an alert block.}
-    This is contents of the block.
+    This is the content of the block.
   \end{alertblock}
 
   \begin{exampleblock}{This is an example block.}
-    This is contents of the block.
+    This is the content of the block.
   \end{exampleblock}
 
-  \begin{block}{This is an example block.}
-    This is contents of the block.
+  \begin{block}{This is a block.}
+    This is the content of the block.
   \end{block}
 \end{frame}
 
-\section{Section II.}
+\section{Section II}
 
-\begin{frame}{Second Slide}
+\begin{frame}{Second Slide: 表と図}
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \begin{table}
@@ -58,13 +63,19 @@
 
     \begin{column}{0.5\textwidth}
       \begin{figure}
-        \begin{tikzpicture}[x=0.5cm,y=-0.5cm]
-          \draw[fill=black] (0,0) -- (3,0) -- (3,1) -- (2,1) -- (2,3) -- (1,3) -- (1,1) -- (0,1);
+        \begin{tikzpicture}
+          \fill[STnavy] (0,0) rectangle (1,2);
+          \fill[STlightblue] (1.2,0) rectangle (2.2,1.4);
+          \fill[STred] (2.4,0) rectangle (3.4,0.8);
         \end{tikzpicture}
         \caption{A Figure}
       \end{figure}
     \end{column}
   \end{columns}
+\end{frame}
+
+\begin{frame}[standout]
+  Questions?
 \end{frame}
 
 \end{document}

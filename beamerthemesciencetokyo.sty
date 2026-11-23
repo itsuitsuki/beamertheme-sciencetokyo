@@ -1,0 +1,47 @@
+%% Science Tokyo Beamer theme.
+%% Derived from the Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (https://github.com/oyamay/beamertheme-titech).
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%% https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemesciencetokyo}[2026/11/23 v2.0 Science Tokyo Beamer theme]
+\RequirePackage{etoolbox}
+\RequirePackage{pgfopts}
+% Official images are used when found on the TeX search path; noimg forces the vector fallback.
+\newif\ifscitokyo@img
+\scitokyo@imgtrue
+\pgfkeys{/sciencetokyo/noimg/.code=\scitokyo@imgfalse}
+\pgfkeys{/sciencetokyo/.cd,
+  .search also={
+    /sciencetokyo/inner,
+    /sciencetokyo/outer,
+    /sciencetokyo/color,
+    /sciencetokyo/font,
+  }
+}
+\pgfkeys{/sciencetokyo/.cd,
+  usetitleprogressbar/.code=\pgfkeysalso{outer/progressbar=frametitle},
+  noslidenumbers/.code=\pgfkeysalso{outer/numbering=none},
+  usetotalslideindicator/.code=\pgfkeysalso{outer/numbering=fraction},
+  nosectionslide/.code=\pgfkeysalso{inner/sectionpage=none},
+  blockbg/.code=\pgfkeysalso{color/block=fill},
+}
+\useinnertheme{sciencetokyo}
+\useoutertheme{sciencetokyo}
+\usecolortheme{sciencetokyo}
+\usefonttheme{sciencetokyo}
+\newcommand{\sciencetokyoset}[1]{\pgfkeys{/sciencetokyo/.cd,#1}}
+\ProcessPgfOptions{/sciencetokyo}
+\endinput
+%%
+%% End of file `beamerthemesciencetokyo.sty'.

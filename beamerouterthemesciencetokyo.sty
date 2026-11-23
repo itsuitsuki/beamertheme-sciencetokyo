@@ -1,0 +1,155 @@
+%% Science Tokyo Beamer theme.
+%% Derived from the Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (https://github.com/oyamay/beamertheme-titech).
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%% https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemesciencetokyo}[2026/11/23 v2.0 Science Tokyo Beamer theme]
+\RequirePackage{etoolbox}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\RequirePackage{tikz}
+\pgfkeys{
+  /sciencetokyo/outer/numbering/.cd,
+  .is choice,
+  none/.code=\setbeamertemplate{frame numbering}[none],
+  counter/.code=\setbeamertemplate{frame numbering}[counter],
+  fraction/.code=\setbeamertemplate{frame numbering}[fraction],
+}
+\pgfkeys{
+  /sciencetokyo/outer/progressbar/.cd,
+  .is choice,
+  none/.code={%
+    \setbeamertemplate{headline}[sciencetokyo]
+    \setbeamertemplate{frametitle}[sciencetokyo]
+    \setbeamertemplate{footline}[sciencetokyo]
+  },
+  head/.code={\pgfkeys{/sciencetokyo/outer/progressbar=none}
+    \addtobeamertemplate{headline}{}{%
+      \usebeamertemplate*{progress bar in head/foot}
+    }
+  },
+  frametitle/.code={\pgfkeys{/sciencetokyo/outer/progressbar=none}
+    \addtobeamertemplate{frametitle}{}{%
+      \usebeamertemplate*{progress bar in head/foot}
+    }
+  },
+  foot/.code={\pgfkeys{/sciencetokyo/outer/progressbar=none}
+    \addtobeamertemplate{footline}{}{%
+      \usebeamertemplate*{progress bar in head/foot}%
+    }
+  },
+}
+% The wide logo sits next to the frame title; the stacked logo is narrower and leaves more room for it.
+\pgfkeys{
+  /sciencetokyo/outer/logo/.cd,
+  .is choice,
+  wide/.code={\def\scitokyo@logostyle{wide}\def\scitokyo@titleright{0.26}},
+  stacked/.code={\def\scitokyo@logostyle{stacked}\def\scitokyo@titleright{0.165}},
+}
+\newcommand{\scitokyo@outer@setdefaults}{
+  \pgfkeys{/sciencetokyo/outer/.cd,
+    numbering=counter,
+    progressbar=none,
+    logo=wide,
+  }
+}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=0.0225\paperwidth, text margin right=0.035\paperwidth}
+\defbeamertemplate{frame footer}{none}{}
+\defbeamertemplate{frame footer}{custom}[1]{ #1 }
+\defbeamertemplate{frame numbering}{none}{}
+\defbeamertemplate{frame numbering}{counter}{\insertframenumber}
+\defbeamertemplate{frame numbering}{fraction}{
+  \insertframenumber/\inserttotalframenumber
+}
+% The headline draws the light blue bar on the right edge, the logo, the frame footer, and the frame number.
+% Title and section pages paint over all of them.
+\defbeamertemplate{headline}{sciencetokyo}{%
+  \ifbool{scitokyo@standout}{}{%
+    \hbox{%
+      \begin{tikzpicture}[remember picture, overlay]
+        \begin{scope}[shift={(current page.north west)}, x=\paperwidth, y=-\paperheight]
+          \fill[STlightblue] (0.991,-0.01) rectangle (1.01,1.01);
+          \ifdefstring{\scitokyo@logostyle}{stacked}{%
+            \node[anchor=north west, inner sep=0pt] at (0.861,0.032) {\scitokyo@logo{stacked}{0.112\paperwidth}};
+          }{%
+            \node[anchor=north west, inner sep=0pt] at (0.795,0.032) {\scitokyo@logo{wide}{0.177\paperwidth}};
+          }
+          \node[anchor=base west, inner sep=0pt, xshift=\beamer@leftmargin] at (0,0.982) {%
+            \usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}\usebeamertemplate*{frame footer}};
+          \node[anchor=base east, inner sep=0pt] at (0.982,0.982) {%
+            \usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}\usebeamertemplate*{frame numbering}};
+        \end{scope}
+      \end{tikzpicture}%
+    }%
+  }%
+}
+% Keeps the text clear of the frame number.
+\defbeamertemplate{footline}{sciencetokyo}{\vbox to 0.035\paperheight{}}
+\newlength{\scitokyo@frametitle@top}
+\newlength{\scitokyo@frametitle@bottom}
+\setlength{\scitokyo@frametitle@top}{0.045\paperheight}
+\setlength{\scitokyo@frametitle@bottom}{0.03\paperheight}
+\newcommand{\scitokyo@frametitlestrut@start}{%
+  \rule{0pt}{\scitokyo@frametitle@top + \totalheightof{X}}%
+}
+\newcommand{\scitokyo@frametitlestrut@end}{%
+  \rule[-\scitokyo@frametitle@bottom]{0pt}{\scitokyo@frametitle@bottom}%
+}
+\defbeamertemplate{frametitle}{sciencetokyo}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[%
+    wd=\paperwidth,%
+    sep=0pt,%
+    leftskip=\beamer@leftmargin,%
+    rightskip=\scitokyo@titleright\paperwidth plus 4em,%
+    ]{frametitle}%
+    \scitokyo@frametitlestrut@start%
+    \insertframetitle%
+    \nolinebreak%
+    \scitokyo@frametitlestrut@end%
+  \end{beamercolorbox}%
+}
+\setbeamertemplate{frametitle continuation}{%
+  \usebeamerfont{frametitle}
+  \romannumeral \insertcontinuationcount
+}
+\newlength{\scitokyo@progressinheadfoot}
+\newlength{\scitokyo@progressinheadfoot@linewidth}
+\setlength{\scitokyo@progressinheadfoot@linewidth}{2pt}
+\setbeamertemplate{progress bar in head/foot}{
+  \nointerlineskip
+  \setlength{\scitokyo@progressinheadfoot}{%
+    \paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+  }%
+  \begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
+    \begin{tikzpicture}
+      \fill[bg] (0,0) rectangle (\paperwidth, \scitokyo@progressinheadfoot@linewidth);
+      \fill[fg] (0,0) rectangle (\scitokyo@progressinheadfoot, \scitokyo@progressinheadfoot@linewidth);
+    \end{tikzpicture}%
+  \end{beamercolorbox}
+}
+\AtBeginDocument{%
+  \apptocmd{\appendix}{%
+    \pgfkeys{%
+      /sciencetokyo/outer/.cd,
+      numbering=none,
+      progressbar=none}
+  }{}{}
+}
+\scitokyo@outer@setdefaults
+\ProcessPgfPackageOptions{/sciencetokyo/outer}
+\endinput
+%%
+%% End of file `beamerouterthemesciencetokyo.sty'.

@@ -1,0 +1,125 @@
+%% Science Tokyo Beamer theme.
+%% Derived from the Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (https://github.com/oyamay/beamertheme-titech).
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%%     https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerfontthemesciencetokyo}[2026/11/23 v2.0 Science Tokyo Beamer theme]
+\RequirePackage{etoolbox}
+\RequirePackage{ifxetex}
+\RequirePackage{ifluatex}
+\RequirePackage{pgfopts}
+\ifboolexpr{bool {xetex} or bool {luatex}}{
+  \@ifpackageloaded{fontspec}{
+    \PassOptionsToPackage{no-math}{fontspec}
+  }{
+    \RequirePackage[no-math]{fontspec}
+  }
+  \newcounter{scitokyo@fontsnotfound}
+  \newcommand{\scitokyo@checkfont}[1]{%
+    \suppressfontnotfounderror=1%
+    \font\scitokyo@fonttest = "#1" at 10pt
+    \ifx\scitokyo@fonttest\nullfont%
+      \stepcounter{scitokyo@fontsnotfound}%
+    \fi%
+    \suppressfontnotfounderror=0%
+  }
+  \newcommand{\scitokyo@iffontsavailable}[3]{%
+    \setcounter{scitokyo@fontsnotfound}{0}%
+    \expandafter\forcsvlist\expandafter%
+    \scitokyo@checkfont\expandafter{#1}%
+    \ifnum\value{scitokyo@fontsnotfound}=0%
+      #2%
+    \else%
+      #3%
+    \fi%
+  }
+  % Fira Sans comes with TeX Live; Noto Sans is the fallback.
+  \scitokyo@iffontsavailable{Fira Sans,%
+                             Fira Sans Italic,%
+                             Fira Sans SemiBold,%
+                             Fira Sans SemiBold Italic}%
+  {%
+    \setsansfont[ItalicFont={Fira Sans Italic},%
+                 BoldFont={Fira Sans SemiBold},%
+                 BoldItalicFont={Fira Sans SemiBold Italic}]%
+                {Fira Sans}%
+  }{%
+    \scitokyo@iffontsavailable{Noto Sans}%
+    {%
+      \setsansfont{Noto Sans}%
+    }{%
+      \PackageWarning{beamerthemesciencetokyo}{%
+        Could not find Fira Sans or Noto Sans%
+      }
+    }
+  }
+  \scitokyo@iffontsavailable{Fira Mono, Fira Mono Medium}{%
+    \setmonofont[BoldFont={Fira Mono Medium}]{Fira Mono}%
+  }{}
+  \AtBeginEnvironment{tabular}{%
+    \addfontfeature{Numbers={Monospaced}}%
+  }
+}{%
+  \PackageWarning{beamerthemesciencetokyo}{%
+    You need to compile with XeLaTeX or LuaLaTeX to use the Fira fonts%
+  }
+}
+% Japanese text follows the sans-serif design in pLaTeX, upLaTeX, and LuaTeX-ja.
+\newcommand{\scitokyo@japanesegothic}{%
+  \ifdefined\kanjifamilydefault
+    \renewcommand{\kanjifamilydefault}{\gtdefault}%
+  \fi
+}
+\scitokyo@japanesegothic
+\AtBeginDocument{\scitokyo@japanesegothic\normalfont}
+% Sizes approximate the official PowerPoint templates on the beamer page.
+\setbeamerfont{title}{size=\LARGE,%
+                      series=\bfseries}
+\setbeamerfont*{subtitle}{size=\large,%
+                          series=\bfseries}
+\setbeamerfont{author}{size=\small,%
+                       series=\bfseries}
+\setbeamerfont{institute}{size=\footnotesize,%
+                          series=\bfseries}
+\setbeamerfont{date}{size=\scriptsize,%
+                     series=\bfseries}
+\setbeamerfont{section title}{size=\LARGE,%
+                              series=\bfseries}
+\setbeamerfont{subsection title}{size=\LARGE,%
+                                 series=\bfseries}
+\setbeamerfont{section in toc}{series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize,%
+                            series=\bfseries}
+\setbeamerfont{block title alerted}{size=\normalsize,%
+                                    series=\bfseries}
+\setbeamerfont{frametitle}{size=\Large,%
+                           series=\bfseries}
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{caption name}{series=\bfseries}
+\setbeamerfont{description item}{series=\bfseries}
+\setbeamerfont{page number in head/foot}{size=\scriptsize}
+\setbeamerfont{bibliography entry author}{size=\normalsize,%
+                                          series=\normalfont}
+\setbeamerfont{bibliography entry title}{size=\normalsize,%
+                                         series=\bfseries}
+\setbeamerfont{bibliography entry location}{size=\normalsize,%
+                                            series=\normalfont}
+\setbeamerfont{bibliography entry note}{size=\small,%
+                                        series=\normalfont}
+\setbeamerfont{standout}{size=\Large,%
+                         series=\bfseries}
+\ProcessPgfPackageOptions{/sciencetokyo/font}
+\endinput
+%%
+%% End of file `beamerfontthemesciencetokyo.sty'.
