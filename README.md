@@ -22,14 +22,16 @@ Without them, the theme draws the bands with TikZ and sets the logo as text.
 The `noimg` option uses this fallback even when the images are present.
 
 # Use the Theme
-`main.tex` is a sample deck. Build it with `latexmk -lualatex -outdir=build main.tex`, or on Overleaf: upload the files of this repository together with the `img/` folder to the top level of a project, and set the compiler to LuaLaTeX.
+`main.tex` is a sample deck. Build it with `latexmk -xelatex -outdir=build main.tex`, or on Overleaf: upload the files of this repository together with the `img/` folder to the top level of a project, and set the compiler to XeLaTeX.
 
 For another document, put the `.sty` files and the `img/` folder next to it, or put this directory on the TeX search path together with its subdirectories (for example, `TEXINPUTS=.:/path/to/this/repository//:`).
 Then load the theme:
 
 ```latex
 \documentclass[aspectratio=169]{beamer}
-\usepackage[haranoaji,deluxe]{luatexja-preset} % Japanese with LuaLaTeX
+\usepackage{xeCJK} % Japanese with XeLaTeX
+\setCJKmainfont{HaranoAjiGothic-Regular.otf}[BoldFont=HaranoAjiGothic-Bold.otf]
+\setCJKsansfont{HaranoAjiGothic-Regular.otf}[BoldFont=HaranoAjiGothic-Bold.otf]
 \usetheme[variant=A]{sciencetokyo}
 
 \title{Presentation Title}
@@ -41,9 +43,9 @@ Then load the theme:
 `\date` fills the slot for the event name and the date on the title page.
 Call `\maketitle` outside a frame, so that the title page gets no frame number and no progress bar.
 
-The theme works with LuaLaTeX, XeLaTeX, pdfLaTeX, and pLaTeX.
-With LuaLaTeX and XeLaTeX, Latin text uses Fira Sans, or Noto Sans when Fira Sans is missing.
-Japanese text uses the Gothic family.
+The theme works with XeLaTeX, LuaLaTeX, pdfLaTeX, and pLaTeX.
+With XeLaTeX and LuaLaTeX, Latin text uses Fira Sans, or Noto Sans when Fira Sans is missing.
+LuaTeX-ja (`\usepackage[haranoaji,deluxe]{luatexja-preset}` with LuaLaTeX) also works for Japanese and gets the Gothic family automatically, but it compiles too slowly for the compile time limit of the free Overleaf plan.
 
 # Options
 
