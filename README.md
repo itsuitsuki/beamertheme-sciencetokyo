@@ -22,8 +22,9 @@ Without them, the theme draws the bands with TikZ and sets the logo as text.
 The `noimg` option uses this fallback even when the images are present.
 
 # Use the Theme
-Put this directory on the TeX search path together with its subdirectories, for example with `TEXINPUTS=.:/path/to/this/repository//:` or by copying it into `$(kpsewhich -var-value TEXMFHOME)/tex/latex/`.
-On Overleaf, upload the `.sty` files and the `img/` folder to the top level of the project, and set the compiler to LuaLaTeX for Japanese text.
+`main.tex` is a sample deck. Build it with `latexmk -lualatex -outdir=build main.tex`, or on Overleaf: upload the files of this repository together with the `img/` folder to the top level of a project, and set the compiler to LuaLaTeX.
+
+For another document, put the `.sty` files and the `img/` folder next to it, or put this directory on the TeX search path together with its subdirectories (for example, `TEXINPUTS=.:/path/to/this/repository//:`).
 Then load the theme:
 
 ```latex
@@ -43,8 +44,6 @@ Call `\maketitle` outside a frame, so that the title page gets no frame number a
 The theme works with LuaLaTeX, XeLaTeX, pdfLaTeX, and pLaTeX.
 With LuaLaTeX and XeLaTeX, Latin text uses Fira Sans, or Noto Sans when Fira Sans is missing.
 Japanese text uses the Gothic family.
-
-`example/` contains a sample deck. Run `make` in that directory to build it with latexmk and LuaLaTeX.
 
 # Options
 
